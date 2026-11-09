@@ -11,7 +11,9 @@ const OLD_HOSTS = new Set([`new.${APEX}`, `www.${APEX}`]);
 // Shopify's own paths. Before the cutover torc.art/<anything> landed on the
 // shop with its path kept; these are the ones that ever meant something there.
 // Checked before the host, so www.torc.art/products/x reaches the shop in one hop.
-const SHOP_PATHS = /^\/(products|collections|cart|checkouts?|account|pages|blogs|policies|search|apps|cdn)(\/|$)/;
+// Shopify Markets put a locale in front (/en-ca/products/x); Google still
+// crawls those on the apex, so they go to the shop too, prefix kept.
+const SHOP_PATHS = /^(\/[a-z]{2}-[a-z]{2})?\/(products|collections|cart|checkouts?|account|pages|blogs|policies|search|apps|cdn)(\/|$)/;
 
 export default {
   async fetch(request, env) {
